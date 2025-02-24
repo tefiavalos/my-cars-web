@@ -9,8 +9,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#EB0A1E",
+        textDark: "#191919", 
+        titleGray: "#373737",
+        grayLight: "#F7F7F7", 
+        black: "#000000", 
+        grey: "#CCC"
+      },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+      },
+      fontSize: {
+        sm: "14px",
+        lg: "28px",
+        xl: "50px",
       },
     },
   },
