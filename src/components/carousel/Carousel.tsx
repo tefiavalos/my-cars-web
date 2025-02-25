@@ -1,98 +1,59 @@
-"use client";
-import React, { useCallback, useEffect, useState } from "react";
-import useEmblaCarousel from "embla-carousel-react";
+"use client"
+import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
-import clsx from "clsx";
 
-const items = [
-  {
-    title: "Nuevos motores Toyota",
-    description: "Dos alternativas diésel con turbo de geometría variable, 1GD (2.8 L) y 2GD (2.4 L).",
-    image: "/images/motor.jpg",
-  },
-  {
-    title: "Suspensión mejorada",
-    description: "Mayor confort de marcha, estabilidad y capacidad Off Road.",
-    image: "/images/suspension.jpg",
-  },
-  {
-    title: "Transmisión automática",
-    description: "Posibilidad de elección de caja automática de manejo.",
-    image: "/images/automatica.jpg",
-  },
-  {
-    title: "Transmisión manual",
-    description: "Posibilidad de elección de caja automática de manejo.",
-    image: "/images/manual.jpg",
-  },
+const cards = [
+  { title: "Nuevos motores Toyota", description: "Dos alternativas diesel con turbo de geometría variable, 1GD (2.8 L) y 2GD (2.4 L).", image: "/engine.png" },
+  { title: "Suspensión mejorada", description: "Mayor confort de marcha, estabilidad y capacidad Off Road.", image: "/suspension.png" },
+  { title: "Transmisión automática", description: "Posibilidad de elección de caja automática de manejo.", image: "/auto-transmission.png" },
+  { title: "Transmisión manual", description: "Posibilidad de elección de caja automática de manejo.", image: "/manual-transmission.png" },
 ];
 
 export default function Carousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
-    loop: true, 
-    align: "start",
-    containScroll: "trimSnaps", 
-  });
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const itemsPerView = 2; // Cantidad de cards visibles en desktop
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev === 0 ? cards.length - 1 : prev - 1));
+  };
 
-  const checkScroll = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (emblaApi) {
-      emblaApi.on("select", checkScroll);
-      checkScroll();
-    }
-  }, [emblaApi, checkScroll]);
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev === cards.length - 1 ? 0 : prev + 1));
+  };
 
   return (
-    <div className="relative w-full mx-auto bg-[#F7F7F7]">
-      {/* Flecha Izquierda */}
-      <button
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-[45px] h-full bg-white/60 rounded-md flex items-center justify-center"
-        onClick={() => emblaApi && emblaApi.scrollPrev()}
-      >
-        <ChevronLeft className="w-6 h-6 text-gray-700" />
-      </button>
-
-      {/* Carrusel */}
-      <div className="overflow-hidden relative px-16" ref={emblaRef}>
-        <div className="flex gap-4"> {/* Espaciado entre elementos */}
-          {items.concat(items).map((item, index) => ( // Duplicamos para loop infinito
-            <div key={index} className="w-[268px] flex-none p-4"> {/* Width fijo */}
-              <Image src={item.image} alt={item.title} width={268} height={200} className="w-full h-36 object-cover rounded-lg" />
-              <h3 className="mt-2 font-bold text-gray-800">{item.title}</h3>
-              <p className="text-sm text-gray-600">{item.description}</p>
-            </div>
-          ))}
+    <div className="relative w-full max-w-4xl mx-auto overflow-hidden">
+      <div className="relative flex items-center">
+        <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-white to-transparent opacity-50 blur-lg z-10" />
+        <button className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg z-20" onClick={prevSlide}>
+          <ChevronLeft />
+        </button>
+        <div className="relative flex w-full overflow-hidden">
+          <div
+            className="flex transition-transform ease-in-out duration-500"
+            style={{ transform: `translateX(-${(currentIndex / cards.length) * 100}%)` }}
+          >
+            {cards.map((card, index) => (
+              <div key={index} className="min-w-1/2 sm:min-w-1/3 p-4 relative">
+                <div className="relative bg-white rounded-lg shadow-lg p-4">
+                  <img src={card.image} alt={card.title} className="w-48 h-48 object-cover rounded-lg" />
+                  <h3 className="mt-4 text-lg font-bold">{card.title}</h3>
+                  <p className="text-gray-600 text-sm text-center">{card.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+        <button className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg z-20" onClick={nextSlide}>
+          <ChevronRight />
+        </button>
+        <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white to-transparent opacity-50 blur-lg z-10" />
       </div>
-
-      {/* Flecha Derecha */}
-      <button
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-[45px] h-full bg-white/60 rounded-md flex items-center justify-center"
-        onClick={() => emblaApi && emblaApi.scrollNext()}
-      >
-        <ChevronRight className="w-6 h-6 text-gray-700" />
-      </button>
-
-      {/* Paginación */}
-      <div className="flex justify-center mt-4 gap-2">
-        {items.map((_, index) => (
-          <span
-            key={index}
-            className={clsx(
-              "w-2 h-2 rounded-full transition-all",
-              selectedIndex === index ? "bg-gray-900" : "bg-gray-400"
-            )}
-          />
+      <div className="flex justify-center mt-4">
+        {cards.map((_, index) => (
+          <span key={index} className={`w-3 h-3 mx-1 rounded-full ${index === currentIndex ? 'bg-gray-800' : 'bg-gray-400'}`} />
         ))}
       </div>
     </div>
   );
 }
-
