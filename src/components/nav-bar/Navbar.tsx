@@ -9,8 +9,7 @@ import NavBarButtons from "./NavBarButtons";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname();
-
+  
   return (
     <nav className="bg-white border-b-[1px] border-gray px-8 py-4 flex items-center justify-between font-montserrat relative">
       <div className="flex items-center gap-12">
