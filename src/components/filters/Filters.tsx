@@ -17,7 +17,7 @@ const FiltersBar = ({
   onSortChange,
 }: FiltersBarProps) => {
   return (
-    <div className="flex justify-between items-center border-b border-grey py-3 mb-10">
+    <div className="flex justify-between items-center border-b border-grey py-3 mb-10 min-w-full">
       <FilterBy
         selectedFilter={selectedFilter}
         onFilterChange={onFilterChange}

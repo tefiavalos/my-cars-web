@@ -13,6 +13,15 @@ export default function ModelosPage() {
     setSelectedSort,
   } = useFilteredModels();
 
+  const loading = !sortedModels || sortedModels.length === 0;
+
+  if(loading){
+    <div className="flex justify-center items-center mb-10">
+    <p>Cargando filtros...</p>
+  </div>
+
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-8">
       <h1 className="text-xl font-bold my-20">Descubrí todos los modelos</h1>
