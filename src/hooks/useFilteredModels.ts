@@ -1,11 +1,10 @@
 import { fetchModels } from "@/app/lib/api";
 import { Model } from "@/app/lib/types";
 import { useState, useEffect, useMemo } from "react";
-import { filterSegmentMapping } from "../config/config";
-
+import { filterSegmentMapping } from "@/config/config";
 
 export default function useFilteredModels() {
-    const [models, setModels] = useState<Model[]>([]);  
+  const [models, setModels] = useState<Model[]>([]);
   const [selectedFilter, setSelectedFilter] = useState("Todos");
   const [selectedSort, setSelectedSort] = useState("Nada");
 
@@ -19,10 +18,11 @@ export default function useFilteredModels() {
 
   const filteredModels = useMemo(() => {
     if (selectedFilter === "Todos") return models;
-    return models.filter((model) => filterSegmentMapping[selectedFilter]?.includes(model.segment));
+    return models.filter((model) =>
+      filterSegmentMapping[selectedFilter]?.includes(model.segment)
+    );
   }, [models, selectedFilter]);
 
-  
   const sortedModels = useMemo(() => {
     const sorted = [...filteredModels];
     switch (selectedSort) {
