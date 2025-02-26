@@ -84,19 +84,19 @@ export default function Carousel({
         {features.map((item: any, index: number) => (
           <div
             key={index}
-            className="shrink-0 w-[90%] sm:w-[45%] lg:w-[30%] xl:w-[25%] max-w-[350px] p-4 h-[300px] flex flex-col justify-between"
+            className="shrink-0 w-[90%] sm:w-[45%] lg:w-[30%] xl:w-[25%] max-w-[350px] p-4 h-[300px] flex flex-col justify-start"
           >
             <Image
               src={item.image}
               alt={item.name}
               width={250}
               height={180}
-              className="w-full h-[150px] object-cover rounded-lg"
+              className="w-[270px] h-[150px] object-cover rounded-lg"
             />
             <h3 className="font-semibold text-titleGray my-3 line-clamp-2">
               {item.name}
             </h3>
-            <p className="text-titleGray text-[14px] line-clamp-3">
+            <p className="text-titleGray text-[16px] line-clamp-3">
               {item.description}
             </p>
           </div>

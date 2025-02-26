@@ -14,8 +14,8 @@ export default function Pagination({
       {Array.from({ length: totalPages }).map((_, index) => (
         <button
           key={index}
-          className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-            currentPage === index ? "bg-gray-900 scale-110" : "bg-gray-400"
+          className={`w-3 h-2 rounded-full transition-colors duration-300 ${
+            currentPage === index ? "bg-[#4A4A4A] opacity-50 w-[39px]" : "bg-[#C5C5C5] opacity-50"
           }`}
           onClick={() => scrollToPage(index)}
         />
