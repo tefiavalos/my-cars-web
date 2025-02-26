@@ -10,17 +10,19 @@ export default {
     extend: {
       colors: {
         primary: "#EB0A1E",
-        textDark: "#191919", 
+        textDark: "#191919",
         titleGray: "#373737",
-        grayLight: "#F7F7F7", 
-        black: "#000000", 
-        grey: "#CCC"
+        grayLight: "#F7F7F7",
+        black: "#000000",
+        grey: "#CCC",
+        menuGray: "#EFEEEF",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
       },
       fontSize: {
         sm: "14px",
+        md: "20px",
         lg: "28px",
         xl: "50px",
       },
