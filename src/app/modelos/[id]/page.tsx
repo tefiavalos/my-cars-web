@@ -1,15 +1,12 @@
 import { fetchModelById } from "@/app/lib/api";
-import FeatureSlider from "@/components/carousel/Carousel";
-import MainTextBox from "@/components/text-box/MainTextBox";
-import InfoBlock from "@/components/text-box/TextBox";
-import Image from "next/image";
+import { Carousel, MainTextBox, TextBox } from "@/components";
 import { notFound } from "next/navigation";
 
-export default async function ModeloPage({
-  params,
-}: {
+interface PageProps {
   params: { id: string };
-}) {
+}
+
+export default async function ModelDetailsPage({ params }: PageProps) {
   const model = await fetchModelById(Number(params.id));
 
   if (!model) return notFound();
@@ -21,12 +18,12 @@ export default async function ModeloPage({
       </section>
 
       <section className="mt-20 w-screen relative left-1/2 -translate-x-1/2">
-        <FeatureSlider features={model.model_features} />
+        <Carousel features={model.model_features} />
       </section>
 
       <section className="mt-20 space-y-12">
         {model.model_highlights.map((highlight, index) => (
-          <InfoBlock
+          <TextBox
             key={index}
             title={highlight.title}
             description={highlight.content}
@@ -37,4 +34,5 @@ export default async function ModeloPage({
       </section>
     </div>
   );
-}
+};
+
