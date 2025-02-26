@@ -5,35 +5,37 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface CarCardProps {
-  model: Model
+  model: Model;
 }
 
 const CarCard: React.FC<CarCardProps> = ({ model }) => {
   return (
-    <div className="p-4 rounded-lg w-64 text-center transition-all duration-300 relative group cursor-pointer">
+    <div className="p-4 rounded-lg w-full max-w-[270px] min-h-[260px] text-center transition-all duration-300 relative group cursor-pointer flex flex-col justify-between">
       <h2 className="font-montserrat text-lg font-bold text-black transition-colors duration-300 group-hover:text-primary">
         {model.name}
       </h2>
-
       <p className="text-textDark text-sm">
         {model.year} | ${model.price}
       </p>
 
-      <div className="relative w-full h-32 my-2">
+      <div className="relative w-full h-[150px] flex items-center justify-center">
         <Image
           src={model.photo}
           alt={model.name}
-          layout="fill"
+          width={200}
+          height={100}
           objectFit="contain"
         />
       </div>
 
-      <Link
-        href={`/modelos/${model.id}`}
-        className="bg-textDark w-[152px] h-[34px] text-white font-montserrat text-sm py-2 px-4 rounded-full absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-      >
-        Ver Modelo
-      </Link>
+      <div className="mt-auto">
+        <Link
+          href={`/modelos/${model.id}`}
+          className="bg-textDark w-[152px] h-[34px] text-white font-montserrat text-sm py-2 px-4 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100 mx-auto block"
+        >
+          Ver Modelo
+        </Link>
+      </div>
     </div>
   );
 };
